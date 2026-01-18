@@ -34,3 +34,10 @@ Route::middleware(['auth:sanctum', 'role:SELLER'])->prefix('seller')->group(func
     Route::get('/products/{id}/pdf', [ProductController::class, 'generatePdf']);
     Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 });
+
+// Physics System Routes
+Route::prefix('physics')->group(function () {
+    Route::post('/toggle', [\App\Http\Controllers\PhysicsController::class, 'toggle']);
+    Route::get('/status', [\App\Http\Controllers\PhysicsController::class, 'status']);
+    Route::put('/config', [\App\Http\Controllers\PhysicsController::class, 'updateConfig']);
+});

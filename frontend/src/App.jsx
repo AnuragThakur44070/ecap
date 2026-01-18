@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
 import SellerDashboard from './pages/SellerDashboard';
+import PhysicsDashboard from './pages/PhysicsDashboard';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // Simple PrivateRoute component
 const PrivateRoute = ({ children, role }) => {
@@ -22,30 +24,36 @@ const PrivateRoute = ({ children, role }) => {
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/login" element={<Login />} />
+    <ErrorBoundary>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<Login />} />
 
-        <Route
-          path="/admin"
-          element={
-            <PrivateRoute role="ADMIN">
-              <AdminDashboard />
-            </PrivateRoute>
-          }
-        />
+          <Route
+            path="/admin"
+            element={
+              <PrivateRoute role="ADMIN">
+                <AdminDashboard />
+              </PrivateRoute>
+            }
+          />
 
-        <Route
-          path="/seller"
-          element={
-            <PrivateRoute role="SELLER">
-              <SellerDashboard />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
-    </Router>
+          <Route
+            path="/seller"
+            element={
+              <PrivateRoute role="SELLER">
+                <SellerDashboard />
+              </PrivateRoute>
+            }
+          />
+
+          {/* Physics Route - Accessible to all authenticated or public for demo */}
+          <Route path="/physics" element={<PhysicsDashboard />} />
+
+        </Routes>
+      </Router>
+    </ErrorBoundary>
   );
 }
 
